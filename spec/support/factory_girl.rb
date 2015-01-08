@@ -7,4 +7,14 @@ FactoryGirl.define do
     password_confirmation 'password'
   end
 
+  factory :concert do
+    date_time Time.now
+    venue 'Saratoga Performing Arts Center'
+  end
+
+
+
+
+
+
 end
