@@ -5,6 +5,7 @@ class ConcertsController < ApplicationController
 
   def show
     @concert = Concert.find(params[:id])
+    @predictions = @concert.predictions
   end
 
 

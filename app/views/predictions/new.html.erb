@@ -1,6 +1,6 @@
 <h1>Prediction Page</h1>
 
-<%= form_for @prediction, url: { action: "create"} do |f| %>
+<%= form_for ([@concert, @prediction]) do |f| %>
 
 <%= f.label :set_one_opener, "Set One Opener" %>
 <%= f.text_field :set_one_opener %>
@@ -16,6 +16,9 @@
 
 <%= f.label :encore, "Encore"%>
 <%= f.text_field :encore %>
+
+<%= f.label :random_song, "Random Pick"%>
+<%= f.text_field :random_song %>
 
 <%= f.submit "Submit Predictions" %>
 

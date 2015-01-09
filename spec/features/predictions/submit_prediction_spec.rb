@@ -19,14 +19,17 @@ Acceptance criteria
     visit dashboard_index_path
     click_link "Upcoming Shows"
     click_link concert.venue
+    click_link "Make your predictions"
 
     fill_in('Set One Opener', with: 'A Song I Heard the Ocean Sing')
     fill_in("Set One Closer", with: "Kill Devil Falls")
     fill_in("Set Two Opener", with: "Golden Age")
     fill_in("Set Two Closer", with: "Harry Hood")
     fill_in("Encore", with: "Sleeping Monkey")
+    fill_in("Random Pick", with: "Free")
 
     click_on "Submit Predictions"
+    save_and_open_page
 
     expect(page).to have_content "Predictions submitted!"
   end
