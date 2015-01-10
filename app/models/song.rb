@@ -9,20 +9,24 @@ class Song < ActiveRecord::Base
 
     songs_hash = {}
 
-    song_rows.each do |song|
-      song_info = {}
-      title = song.children.children[0].text
-      artist = song.children.children[1].text
-      if song.children.children[5]
-        gap = song.children.children[5].text
-      else
-        gap = nil
+
+    song_rows.each do |song| do
+      # DOESN'T WORK START HERE!!! NEED TO SKIP FIRST PART
+      if song.children.children[5].to_i > 1 && != "Current Gap"
+        song_info = {}
+        title = song.children.children[0].text
+        artist = song.children.children[1].text
+        if song.children.children[5]
+          gap = song.children.children[5].text
+        else
+          gap = nil
+        end
+
+        song_info["artist"] = artist
+        song_info["gap"] = gap
+
+        songs_hash[title] = song_info
       end
-
-      song_info["artist"] = artist
-      song_info["gap"] = gap
-
-      songs_hash[title] = song_info
     end
     # removes first row (column header)
     songs_hash.delete("Song Name")
