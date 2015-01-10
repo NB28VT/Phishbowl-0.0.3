@@ -8,7 +8,6 @@ class ConcertsController < ApplicationController
     @predictions = @concert.predictions
   end
 
-
   private
 
   def concert_params

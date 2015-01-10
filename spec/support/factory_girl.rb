@@ -8,9 +8,10 @@ FactoryGirl.define do
   end
 
   factory :concert do
-    state "VT"
-    city "Burlington"
-    date_time Time.now
-    venue 'Saratoga Performing Arts Center'
+    random_show = Concert.load_random_show
+    state random_show[:state]
+    city random_show[:city]
+    venue random_show[:venue]
+    concert_date random_show[:concert_date]
   end
 end

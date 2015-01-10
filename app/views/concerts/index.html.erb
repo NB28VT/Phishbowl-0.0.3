@@ -1,7 +1,8 @@
 <h1>Concert Index Page</h1>
 <ul class="small-block-grid-3">
   <% @concerts.each do |concert| %>
-    <h2><%= concert.date_time %></h2>
-    <li><%= link_to concert.venue, concert_path(concert) %></li>
+    <h3><%= link_to concert.concert_date, concert_path(concert) %></h3>
+    <li><%= concert.venue %></li>
+    <li><%= concert.city %> , <%= concert.state %></li>
   <% end %>
 </ul>

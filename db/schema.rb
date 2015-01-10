@@ -11,18 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110151634) do
+ActiveRecord::Schema.define(version: 20150110162534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "concerts", force: :cascade do |t|
-    t.string   "venue",      null: false
-    t.datetime "date_time",  null: false
+    t.string   "venue",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "city",       null: false
-    t.string   "state",      null: false
+    t.string   "city",         null: false
+    t.string   "state",        null: false
+    t.string   "concert_date", null: false
   end
 
   create_table "predictions", force: :cascade do |t|
