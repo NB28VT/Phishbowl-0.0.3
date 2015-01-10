@@ -8,6 +8,8 @@ FactoryGirl.define do
   end
 
   factory :concert do
+    state "VT"
+    city "Burlington"
     date_time Time.now
     venue 'Saratoga Performing Arts Center'
   end
