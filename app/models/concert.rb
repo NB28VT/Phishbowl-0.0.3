@@ -56,4 +56,16 @@ class Concert < ActiveRecord::Base
   end
 
 
+  def self.create_random_show
+    concert_data_hash = load_random_show
+    Concert.create(
+      concert_date: concert_data_hash[:concert_date],
+      city: concert_data_hash[:city],
+      state: concert_data_hash[:state],
+      venue: concert_data_hash[:venue]
+    )
+  end
+
+
+
 end
