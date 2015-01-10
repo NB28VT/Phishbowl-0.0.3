@@ -2,30 +2,48 @@
 
 <%= form_for ([@concert, @prediction]) do |f| %>
 
-<!-- <%= f.label :set_one_opener, "Set One Opener" %>
-<%= f.text_field :set_one_opener %> -->
+  <%= f.label :set_one_opener, "Set One Opener" %>
+  <%= f.select :set_one_opener,
+  Song.all.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.label :set_one_closer, "Set One Closer" %>
-<%= f.text_field :set_one_closer %>
+  <%= f.label :set_one_closer, "Set One Closer" %>
+  <%= f.select :set_one_closer,
+  Song.all.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.label :set_two_opener, "Set Two Opener" %>
-<%= f.text_field :set_two_opener %>
+  <%= f.label :set_two_opener, "Set Two Opener" %>
+  <%= f.select :set_two_opener,
+  Song.all.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.label :set_two_closer, "Set Two Closer"%>
-<%= f.text_field :set_two_closer %>
+  <%= f.label :set_two_closer, "Set Two Closer"%>
+  <%= f.select :set_two_closer,
+  Song.all.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.label :encore, "Encore"%>
-<%= f.text_field :encore %>
+  <%= f.label :encore, "Encore"%>
+  <%= f.select :encore,
+  Song.all.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.label :random_song, "Random Pick"%>
-<%= f.text_field :random_song %>
+  <%= f.label :random_song, "Random Pick"%>
+  <%= f.select :random_song,
+  Song.all.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.select :set_one_opener,
-Song.all.map { |s| [s.song_name, s.id] },
-# { include_blank: true },
-{ class: 'chosen-select' }
-%>
-
-<%= f.submit "Submit Predictions" %>
+  <%= f.submit "Submit Predictions" %>
 
 <% end %>
