@@ -13,10 +13,4 @@ FactoryGirl.define do
     date_time Time.now
     venue 'Saratoga Performing Arts Center'
   end
-
-
-
-
-
-
 end
