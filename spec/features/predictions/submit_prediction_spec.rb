@@ -27,6 +27,10 @@ Acceptance criteria
     click_link concert.concert_date
     click_link "Make your predictions"
 
+    binding.pry
+
+    save_and_open_page
+
     fill_in('Set One Opener', with: 'A Song I Heard the Ocean Sing')
     fill_in("Set One Closer", with: "Kill Devil Falls")
     fill_in("Set Two Opener", with: "Golden Age")
@@ -47,7 +51,7 @@ Acceptance criteria
     click_link "Upcoming Shows"
     click_link concert.concert_date
     click_link "Make your predictions"
-    
+
     expect(page).to have_content "You need to sign in or sign up before continuing"
     concert.destroy!
   end

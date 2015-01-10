@@ -2,8 +2,8 @@
 
 <%= form_for ([@concert, @prediction]) do |f| %>
 
-<%= f.label :set_one_opener, "Set One Opener" %>
-<%= f.text_field :set_one_opener %>
+<!-- <%= f.label :set_one_opener, "Set One Opener" %>
+<%= f.text_field :set_one_opener %> -->
 
 <%= f.label :set_one_closer, "Set One Closer" %>
 <%= f.text_field :set_one_closer %>
@@ -19,6 +19,12 @@
 
 <%= f.label :random_song, "Random Pick"%>
 <%= f.text_field :random_song %>
+
+<%= f.select :set_one_opener,
+Song.all.map { |s| [s.song_name, s.id] },
+# { include_blank: true },
+{ class: 'chosen-select' }
+%>
 
 <%= f.submit "Submit Predictions" %>
 
