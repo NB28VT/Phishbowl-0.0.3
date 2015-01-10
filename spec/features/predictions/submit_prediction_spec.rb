@@ -45,8 +45,9 @@ Acceptance criteria
 
     visit dashboard_index_path
     click_link "Upcoming Shows"
+    click_link concert.concert_date
     click_link "Make your predictions"
-
+    
     expect(page).to have_content "You need to sign in or sign up before continuing"
     concert.destroy!
   end
