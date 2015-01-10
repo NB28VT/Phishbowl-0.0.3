@@ -1,7 +1,7 @@
 class Song < ActiveRecord::Base
 
 
-  def self.fill_song_table
+  def self.load_song_table
 
     load_song_page = HTTParty.get("http://phish.net/song/")
     parsed_song_page = Nokogiri::HTML(load_song_page)
@@ -21,8 +21,11 @@ class Song < ActiveRecord::Base
 
       song_info["artist"] = artist
       song_info["gap"] = gap
-      
+
       songs_hash[title] = song_info
     end
-
+    # removes first row (column header)
+    songs_hash.delete("Song Name")
+    songs_hash
+  end
 end
