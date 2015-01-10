@@ -13,7 +13,12 @@ Acceptance criteria
 
 ) do
 
-  scenario "A user enter a valid prediction" do
+
+  scenario "A user can sign in and enter a valid prediction" do
+    user = FactoryGirl.create(:user)
+
+
+    sign_in_as(user)
 
     concert = FactoryGirl.create(:concert)
     visit dashboard_index_path
@@ -29,10 +34,21 @@ Acceptance criteria
     fill_in("Random Pick", with: "Free")
 
     click_on "Submit Predictions"
-    save_and_open_page
 
     expect(page).to have_content "Predictions submitted!"
   end
+
+  scenario "A user must be signed in to enter a prediction" do
+
+    concert = FactoryGirl.create(:concert)
+    visit dashboard_index_path
+    click_link "Upcoming Shows"
+    click_link concert.venue
+    click_link "Make your predictions"
+
+    expect(page).to have_content "You need to sign in or sign up before continuing"
+  end
+
 
 
 
