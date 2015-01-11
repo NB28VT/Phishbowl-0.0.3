@@ -10,9 +10,9 @@ class Song < ActiveRecord::Base
     songs_hash = {}
 
 
-    song_rows.each do |song| do
-      # DOESN'T WORK START HERE!!! NEED TO SKIP FIRST PART
-      if song.children.children[5].to_i > 1 && != "Current Gap"
+    song_rows.each do |song|
+      # DOESN'T WORK!!! Need to drop table from database and start over
+      if song.children.children[2].text != "1"
         song_info = {}
         title = song.children.children[0].text
         artist = song.children.children[1].text
