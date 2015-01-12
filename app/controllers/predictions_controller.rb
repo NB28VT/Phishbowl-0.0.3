@@ -3,7 +3,6 @@ class PredictionsController < ApplicationController
 
 
   def new
-    # missing required keys
     @prediction = Prediction.new
     @concert = Concert.find(params[:concert_id])
     @song_list = Song.all
@@ -15,7 +14,6 @@ class PredictionsController < ApplicationController
     @concert = Concert.find(params[:concert_id])
 
     if @prediction.save
-      binding.pry
       redirect_to (concert_path(@concert)), notice: "Predictions submitted!"
     else
       render 'new'
@@ -26,12 +24,14 @@ class PredictionsController < ApplicationController
 
   def prediction_params
     params.require(:prediction).permit(
-    :set_one_opener,
-    :set_one_closer,
-    :set_two_opener,
-    :set_two_closer,
-    :encore,
-    :random_song
+    :set_one_opener_song_id,
+    :set_one_closer_song_id,
+    :set_two_opener_song_id,
+    :set_two_closer_song_id,
+    :encore_song_id,
+    :random_pick_song_id,
+    :concert_id,
+    :user_id
     )
 
   end

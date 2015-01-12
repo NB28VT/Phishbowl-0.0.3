@@ -1,25 +1,25 @@
 class Song < ActiveRecord::Base
-  has_many :set_one_opener_prediction,
+  has_many :set_one_opener_predictions,
     class_name: 'Prediction',
     foreign_key: 'set_one_opener_song_id'
 
-  has_many :set_one_closer_prediction,
+  has_many :set_one_closer_predictions,
     class_name: 'Prediction',
     foreign_key: 'set_one_closer_song_id'
 
-  has_many :set_two_opener_prediction,
+  has_many :set_two_opener_predictions,
     class_name: 'Prediction',
     foreign_key: 'set_two_opener_song_id'
 
-  has_many :set_two_closer_prediction,
+  has_many :set_two_closer_predictions,
     class_name: 'Prediction',
     foreign_key: 'set_two_closer_song_id'
 
-  has_many :encore_prediction,
+  has_many :encore_predictions,
     class_name: 'Prediction',
     foreign_key: 'encore_song_id'
 
-  has_many :random_pick_prediction,
+  has_many :random_pick_predictions,
     class_name: 'Prediction',
     foreign_key: 'random_pick_song_id'
 

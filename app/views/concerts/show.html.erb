@@ -7,6 +7,11 @@
 <ul>
   <% @concert.predictions.each do |picks| %>
     <h3><%= picks.user %></h3>
-    <li><%= picks.set_one_opener %></li>
+    <li><%= picks.set_one_opener_song.song_name %></li>
+    <li><%= picks.set_one_closer_song.song_name %></li>
+    <li><%= picks.set_two_opener_song.song_name %></li>
+    <li><%= picks.set_two_closer_song.song_name %></li>
+    <li><%= picks.encore_song.song_name %></li>
+    <li><%= picks.random_pick_song.song_name %></li>
   <% end %>
 </ul>
