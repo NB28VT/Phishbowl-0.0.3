@@ -15,7 +15,6 @@ class Concert < ActiveRecord::Base
     concert_data_hash[:city] = jsoned[0]["city"]
     concert_data_hash[:state] = jsoned[0]["state"]
     concert_data_hash[:venue] = jsoned[0]["venue"]
-
     # setlist_data = jsoned[0]["setlistdata"]
     # setlist = Nokogiri::HTML(latest_setlist_data)
     #
@@ -46,16 +45,17 @@ class Concert < ActiveRecord::Base
     concert_data_hash
   end
 
-
-
   def self.load_latest_show
-    show_loader("https://api.phish.net/api.json?api=2.0&method=pnet.shows.setlists.latest")
+    show_loader(
+    "https://api.phish.net/api.json?api=2.0&method=pnet.shows.setlists.latest"
+    )
   end
 
   def self.load_random_show
-    show_loader("https://api.phish.net/api.json?api=2.0&method=pnet.shows.setlists.random")
+    show_loader(
+    "https://api.phish.net/api.json?api=2.0&method=pnet.shows.setlists.random"
+    )
   end
-
 
   def self.create_random_show
     concert_data_hash = load_random_show
@@ -66,7 +66,4 @@ class Concert < ActiveRecord::Base
       venue: concert_data_hash[:venue]
     )
   end
-
-
-
 end

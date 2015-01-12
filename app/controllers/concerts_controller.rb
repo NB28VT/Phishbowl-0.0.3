@@ -12,6 +12,5 @@ class ConcertsController < ApplicationController
 
   def concert_params
     params.require(:concert).permit(:venue, :date_time)
-
   end
 end
