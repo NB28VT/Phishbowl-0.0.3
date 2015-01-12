@@ -4,6 +4,8 @@ RSpec.describe Prediction, :type => :model do
   it "allows a user to enter a valid prediction" do
     prediction = Prediction.new
 
+    prediction.user_id = 1
+    prediction.concert_id = 1
     prediction.set_one_opener_song_id = 1
     prediction.set_one_closer_song_id = 2
     prediction.set_two_opener_song_id = 3
