@@ -11,25 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150109164609) do
+ActiveRecord::Schema.define(version: 20150112205634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "concerts", force: :cascade do |t|
-    t.string   "venue",      null: false
-    t.datetime "date_time",  null: false
+    t.string   "venue",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "city",         null: false
+    t.string   "state",        null: false
+    t.string   "concert_date", null: false
   end
 
   create_table "predictions", force: :cascade do |t|
-    t.string "set_one_opener", null: false
-    t.string "set_one_closer", null: false
-    t.string "set_two_opener", null: false
-    t.string "set_two_closer", null: false
-    t.string "encore",         null: false
-    t.string "random_song"
+    t.integer "user_id"
+    t.integer "concert_id"
+    t.integer "set_one_opener_song_id", null: false
+    t.integer "set_one_closer_song_id", null: false
+    t.integer "set_two_opener_song_id", null: false
+    t.integer "set_two_closer_song_id"
+    t.integer "encore_song_id",         null: false
+    t.integer "random_pick_song_id",    null: false
+  end
+
+  create_table "songs", force: :cascade do |t|
+    t.string   "song_name",   null: false
+    t.string   "artist_name", null: false
+    t.integer  "song_gap"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,25 +1,62 @@
 <h1>Prediction Page</h1>
 
+<% if @prediction.errors.any? %>
+<h2>ERROR!</h2>
+<ul>
+  <% @prediction.errors.full_messages.each do |error_msg| %>
+  <li><%= error_msg %></li>
+  <% end %>
+</ul>
+
+<% end %>
+
 <%= form_for ([@concert, @prediction]) do |f| %>
 
-<%= f.label :set_one_opener, "Set One Opener" %>
-<%= f.text_field :set_one_opener %>
+  <%= f.label :set_one_opener_song_id, "Set One Opener" %>
+  <%= f.select :set_one_opener_song_id,
+  @song_list.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.label :set_one_closer, "Set One Closer" %>
-<%= f.text_field :set_one_closer %>
+  <%= f.label :set_one_closer_song_id, "Set One Closer" %>
+  <%= f.select :set_one_closer_song_id,
+  @song_list.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.label :set_two_opener, "Set Two Opener" %>
-<%= f.text_field :set_two_opener %>
+  <%= f.label :set_two_opener_song_id, "Set Two Opener" %>
+  <%= f.select :set_two_opener_song_id,
+  @song_list.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.label :set_two_closer, "Set Two Closer"%>
-<%= f.text_field :set_two_closer %>
+  <%= f.label :set_two_closer_song_id, "Set Two Closer"%>
+  <%= f.select :set_two_closer_song_id,
+  @song_list.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.label :encore, "Encore"%>
-<%= f.text_field :encore %>
+  <%= f.label :encore_song_id, "Encore"%>
+  <%= f.select :encore_song_id,
+  @song_list.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.label :random_song, "Random Pick"%>
-<%= f.text_field :random_song %>
+  <%= f.label :random_pick_song_id, "Random Pick"%>
+  <%= f.select :random_pick_song_id,
+  @song_list.map { |s| [s.song_name, s.id] },
+  { include_blank: true },
+  { class: 'chosen-select' }
+  %>
 
-<%= f.submit "Submit Predictions" %>
+  <%= f.hidden_field :user_id, value: current_user.id%>
+  <%= f.hidden_field :concert_id, value: @concert.id%>
+
+  <%= f.submit "Submit Predictions" %>
 
 <% end %>
