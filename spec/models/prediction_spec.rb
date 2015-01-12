@@ -26,20 +26,4 @@ RSpec.describe Prediction, :type => :model do
     expect(prediction.save).to eq(false)
   end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 end
