@@ -1,5 +1,6 @@
 class Concert < ActiveRecord::Base
   has_many :predictions
+  validates :concert_date, uniqueness: true
 
   Dotenv.load
 

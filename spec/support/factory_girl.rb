@@ -8,10 +8,9 @@ FactoryGirl.define do
   end
 
   factory :concert do
-    random_show = Concert.load_random_show
-    state random_show[:state]
-    city random_show[:city]
-    venue random_show[:venue]
-    concert_date random_show[:concert_date]
+    sequence(:concert_date) { |n| "1/#{n}/1995" }
+    state 'VT'
+    city 'Burlington'
+    venue 'Flynn Theatre'
   end
 end
