@@ -6,6 +6,7 @@ class PredictionsController < ApplicationController
     # missing required keys
     @prediction = Prediction.new
     @concert = Concert.find(params[:concert_id])
+    @song_list = Song.all
   end
 
   def create
@@ -14,6 +15,7 @@ class PredictionsController < ApplicationController
     @concert = Concert.find(params[:concert_id])
 
     if @prediction.save
+      binding.pry
       redirect_to (concert_path(@concert)), notice: "Predictions submitted!"
     else
       render 'new'

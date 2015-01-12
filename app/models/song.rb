@@ -1,5 +1,27 @@
 class Song < ActiveRecord::Base
+  has_many :set_one_opener_prediction,
+    class_name: 'Prediction',
+    foreign_key: 'set_one_opener_song_id'
 
+  has_many :set_one_closer_prediction,
+    class_name: 'Prediction',
+    foreign_key: 'set_one_closer_song_id'
+
+  has_many :set_two_opener_prediction,
+    class_name: 'Prediction',
+    foreign_key: 'set_two_opener_song_id'
+
+  has_many :set_two_closer_prediction,
+    class_name: 'Prediction',
+    foreign_key: 'set_two_closer_song_id'
+
+  has_many :encore_prediction,
+    class_name: 'Prediction',
+    foreign_key: 'encore_song_id'
+
+  has_many :random_pick_prediction,
+    class_name: 'Prediction',
+    foreign_key: 'random_pick_song_id'
 
   def self.load_song_table
 
@@ -9,9 +31,7 @@ class Song < ActiveRecord::Base
 
     songs_hash = {}
 
-
     song_rows.each do |song|
-      # DOESN'T WORK!!! Need to drop table from database and start over
       if song.children.children[2].text != "1"
         song_info = {}
         title = song.children.children[0].text

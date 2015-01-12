@@ -27,20 +27,25 @@ Acceptance criteria
     click_link concert.concert_date
     click_link "Make your predictions"
 
-    binding.pry
+    # NOT SURE IF THIS WILL WORK..
 
-    save_and_open_page
+    select("A Song I Heard the Ocean Sing", from: "Set One Opener")
+    select("Kill Devil Falls", from: "Set One Closer")
+    select("Golden Age", from: "Set Two Opener")
+    select("Harry Hood", from: "Set Two Closer")
+    select("Free", from: "Random Pick")
 
-    fill_in('Set One Opener', with: 'A Song I Heard the Ocean Sing')
-    fill_in("Set One Closer", with: "Kill Devil Falls")
-    fill_in("Set Two Opener", with: "Golden Age")
-    fill_in("Set Two Closer", with: "Harry Hood")
-    fill_in("Encore", with: "Sleeping Monkey")
-    fill_in("Random Pick", with: "Free")
+    # fill_in('Set One Opener', with: 'A Song I Heard the Ocean Sing')
+    # fill_in("Set One Closer", with: "Kill Devil Falls")
+    # fill_in("Set Two Opener", with: "Golden Age")
+    # fill_in("Set Two Closer", with: "Harry Hood")
+    # fill_in("Encore", with: "Sleeping Monkey")
+    # fill_in("Random Pick", with: "Free")
 
     click_on "Submit Predictions"
 
     expect(page).to have_content "Predictions submitted!"
+    expect(page).to have_content "A Song I heard the Ocean Sing"
     concert.destroy!
   end
 

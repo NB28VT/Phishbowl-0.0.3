@@ -1,6 +1,13 @@
 class Prediction < ActiveRecord::Base
   belongs_to :concert
+  belongs_to :user
 
+  has_one :set_one_opener_song_id, class_name: "Song", foreign_key: "song_id"
+  has_one :set_one_closer_song_id, class_name: "Song", foreign_key: "song_id"
+  has_one :set_two_opener_song_id, class_name: "Song", foreign_key: "song_id"
+  has_one :set_two_closer_song_id, class_name: "Song", foreign_key: "song_id"
+  has_one :encore_song_id, class_name: "Song", foreign_key: "song_id"
+  has_one :random_pick_song_id, class_name: "Song", foreign_key: "song_id"
 
 
   Dotenv.load
@@ -38,23 +45,6 @@ class Prediction < ActiveRecord::Base
       encore << song.children.text
     end
   end
-
-  # old code for csv file. Delete some day.
-  # def load_song_list
-  #   # IN THE FUTURE, LOAD TO DB FOR ACCESS
-  #   contents = File.read("song_list_raw.txt")
-  #   lines = File.readlines("song_list_raw.txt")
-  #
-  #   songs = []
-  #
-  #   lines.each do |line|
-  #     song = line.split("\")[1]
-  #     songs << song
-  #   end
-  #   songs = songs.compact
-  # end
-
-
 
   # Loads a list of all Phish songs and covers from Phish.net, into hash
   def self.load_songs_and_gaps
@@ -100,14 +90,16 @@ class Prediction < ActiveRecord::Base
   #Returns a hash of songs with artist and gap as values
   @songs_hash = load_songs_and_gaps
 
-  [
-    :set_one_opener,
-    :set_one_closer,
-    :set_two_opener,
-    :set_two_closer,
-    :encore,
-  ].each do |n|
-    validates n, inclusion: { in: @songs_hash.keys, message: "Picks must be a song Phish has played."}
-  end
+  # Shouldn't need this, but keep just in case
+
+  # [
+  #   :set_one_opener,
+  #   :set_one_closer,
+  #   :set_two_opener,
+  #   :set_two_closer,
+  #   :encore,
+  # ].each do |n|
+  #   validates n, inclusion: { in: @songs_hash.keys, message: "Picks must be a song Phish has played."}
+  # end
 
 end

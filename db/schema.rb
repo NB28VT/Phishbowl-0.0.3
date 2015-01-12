@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110191802) do
+ActiveRecord::Schema.define(version: 20150112153521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,12 +26,14 @@ ActiveRecord::Schema.define(version: 20150110191802) do
   end
 
   create_table "predictions", force: :cascade do |t|
-    t.string "set_one_opener", null: false
-    t.string "set_one_closer", null: false
-    t.string "set_two_opener", null: false
-    t.string "set_two_closer", null: false
-    t.string "encore",         null: false
-    t.string "random_song"
+    t.integer "user_id"
+    t.integer "concert_id"
+    t.integer "set_one_opener_song_id"
+    t.integer "set_one_closer_song_id"
+    t.integer "set_two_opener_song_id"
+    t.integer "set_two_closer_song_id"
+    t.integer "encore_song_id"
+    t.integer "random_pick_song_id"
   end
 
   create_table "songs", force: :cascade do |t|

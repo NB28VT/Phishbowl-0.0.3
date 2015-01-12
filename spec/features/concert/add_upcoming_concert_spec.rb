@@ -14,10 +14,9 @@ Acceptance criteria
 
 
   scenario "The app loads a random show onto the show page" do
-    # TESTS START WITH EXISTING CONCERT WHAT WHERE IS THIS COMING FROM???
+
     user = FactoryGirl.create(:user)
     concert = FactoryGirl.create(:concert)
-    # ALSO THIS IS PULLING THE SAME SHOW AS THE ONE ABOVE
 
     sign_in_as(user)
 
