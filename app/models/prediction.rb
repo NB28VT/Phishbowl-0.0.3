@@ -2,12 +2,18 @@ class Prediction < ActiveRecord::Base
   belongs_to :concert,  class_name: "Concert", foreign_key: "concert_id"
   belongs_to :user
 
-  belongs_to :set_one_opener_song, class_name: "Song", foreign_key: "set_one_opener_song_id"
-  belongs_to :set_one_closer_song, class_name: "Song", foreign_key: "set_one_closer_song_id"
-  belongs_to :set_two_opener_song, class_name: "Song", foreign_key: "set_two_opener_song_id"
-  belongs_to :set_two_closer_song, class_name: "Song", foreign_key: "set_two_closer_song_id"
-  belongs_to :encore_song, class_name: "Song", foreign_key: "encore_song_id"
-  belongs_to :random_pick_song, class_name: "Song", foreign_key: "random_pick_song_id"
+  belongs_to :set_one_opener_song,
+    class_name: "Song", foreign_key: "set_one_opener_song_id"
+  belongs_to :set_one_closer_song,
+   class_name: "Song", foreign_key: "set_one_closer_song_id"
+  belongs_to :set_two_opener_song,
+   class_name: "Song", foreign_key: "set_two_opener_song_id"
+  belongs_to :set_two_closer_song,
+   class_name: "Song", foreign_key: "set_two_closer_song_id"
+  belongs_to :encore_song,
+   class_name: "Song", foreign_key: "encore_song_id"
+  belongs_to :random_pick_song,
+   class_name: "Song", foreign_key: "random_pick_song_id"
 
   validates_presence_of :set_one_opener_song_id
   validates_presence_of :set_one_closer_song_id
@@ -16,14 +22,13 @@ class Prediction < ActiveRecord::Base
   validates_presence_of :encore_song_id
   validates_presence_of :random_pick_song_id
 
-
-
   Dotenv.load
   # api_key = ENV[names of keys]
 
-
   def load_latest_show
-    latest_setlist = HTTParty.get("https://api.phish.net/api.json?api=2.0&method=pnet.shows.setlists.latest")
+    latest_setlist = HTTParty.get(
+    "https://api.phish.net/api.json?api=2.0&method=pnet.shows.setlists.latest"
+    )
 
     jsoned = JSON.parse(latest_setlist)
     latest_setlist_data = jsoned[0]["setlistdata"]
@@ -80,7 +85,6 @@ class Prediction < ActiveRecord::Base
     end
 
     # removes first row (column header)
-
     songs_hash.delete("Song Name")
     songs_hash
   end
@@ -94,20 +98,4 @@ class Prediction < ActiveRecord::Base
     end
     cover_songs
   end
-
-  #Returns a hash of songs with artist and gap as values
-  @songs_hash = load_songs_and_gaps
-
-  # Shouldn't need this, but keep just in case
-
-  # [
-  #   :set_one_opener,
-  #   :set_one_closer,
-  #   :set_two_opener,
-  #   :set_two_closer,
-  #   :encore,
-  # ].each do |n|
-  #   validates n, inclusion: { in: @songs_hash.keys, message: "Picks must be a song Phish has played."}
-  # end
-
 end

@@ -1,6 +1,5 @@
 class PredictionsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create ]
-
+  before_action :authenticate_user!, only: [:new, :create]
 
   def new
     @prediction = Prediction.new
@@ -33,6 +32,5 @@ class PredictionsController < ApplicationController
     :concert_id,
     :user_id
     )
-
   end
 end

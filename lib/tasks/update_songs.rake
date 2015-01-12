@@ -13,8 +13,6 @@ desc "Crawls the Phish.net song list and loads an updated table of songs with ar
 # PUT IN SEED FILE
 #
 
-
-
 task :update_songs do
   Song.destroy_all
   Song.fill_song_table
