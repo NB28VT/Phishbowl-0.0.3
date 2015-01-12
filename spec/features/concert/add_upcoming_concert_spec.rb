@@ -24,6 +24,5 @@ Acceptance criteria
     click_link "Upcoming Shows"
 
     expect(page).to have_content (concert.concert_date)
-    concert.destroy!
   end
 end

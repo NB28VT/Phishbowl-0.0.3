@@ -36,7 +36,6 @@ Acceptance criteria
 
     expect(page).to have_content "Predictions submitted!"
     expect(page).to have_content "A Song I Heard the Ocean Sing"
-    concert.destroy!
   end
 
   scenario "A user must be signed in to enter a prediction" do
@@ -48,6 +47,5 @@ Acceptance criteria
     click_link "Make your predictions"
 
     expect(page).to have_content "You need to sign in or sign up before continuing"
-    concert.destroy!
   end
 end
