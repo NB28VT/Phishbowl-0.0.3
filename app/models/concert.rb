@@ -51,8 +51,6 @@ class Concert < ActiveRecord::Base
 
     concert_data_hash[:encore_array] = encore
 
-    end
-
     concert_data_hash
   end
 
@@ -66,29 +64,33 @@ class Concert < ActiveRecord::Base
     show_loader(
     "https://api.phish.net/api.json?api=2.0&method=pnet.shows.setlists.random"
     )
-    # IF CONCERT EXISTS KEEP TRYING
-
-
-
-
+    # IF CONCERT EXISTS KEEP TRYING?
   end
 
   def self.create_random_show
     concert_data_hash = load_random_show
 
-    new_concert = Concert.create(
+    # find or create_by
+
+    new_concert = Concert.find_or_initialize_by(
       concert_date: concert_data_hash[:concert_date],
       city: concert_data_hash[:city],
       state: concert_data_hash[:state],
       venue: concert_data_hash[:venue]
     )
+
+    new_concert.save
     # BUILDING METHOD FOR CONCERT SONGS
     # SET ONE
+
+    # find or initialize by on song id?
+
+    # DRY UP THIS CODE AFTER WORKS
+
     concert_data_hash[:set_one_array].each do |song|
       binding.pry
       index = 0
       ConcertSong.create(
-      # UGLY
         song_id: Song.find_by(song_name: song).id,
         play_index: index,
         set_index: 1,
@@ -100,7 +102,6 @@ class Concert < ActiveRecord::Base
     concert_data_hash[:set_two_array].each do |song|
       index = 0
       ConcertSong.create(
-      # UGLY
       song_id: Song.find_by(song_name: song).id,
       play_index: index,
       set_index: 2,
@@ -112,7 +113,6 @@ class Concert < ActiveRecord::Base
     concert_data_hash[:encore_array].each do |song|
       index = 0
       ConcertSong.create(
-      # UGLY
       song_id: Song.find_by(song_name: song).id,
       play_index: index,
       set_index: 3,
@@ -120,6 +120,10 @@ class Concert < ActiveRecord::Base
       )
       index += 1
     end
+
+
+
+
 
 
     # PASS RANDOM SHOW AS OBJECT HERE?
