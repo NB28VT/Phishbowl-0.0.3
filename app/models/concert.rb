@@ -64,13 +64,10 @@ class Concert < ActiveRecord::Base
     show_loader(
     "https://api.phish.net/api.json?api=2.0&method=pnet.shows.setlists.random"
     )
-    # IF CONCERT EXISTS KEEP TRYING?
   end
 
   def self.create_random_show
     concert_data_hash = load_random_show
-
-    # find or create_by
 
     new_concert = Concert.find_or_initialize_by(
       concert_date: concert_data_hash[:concert_date],
@@ -80,53 +77,50 @@ class Concert < ActiveRecord::Base
     )
 
     new_concert.save
-    # BUILDING METHOD FOR CONCERT SONGS
-    # SET ONE
 
     # find or initialize by on song id?
 
     # DRY UP THIS CODE AFTER WORKS
 
+    # CODE WORKS. NEED TO HANDLE NIL SETS!!!!
+
+    song_index = 1
     concert_data_hash[:set_one_array].each do |song|
-      binding.pry
-      index = 0
-      ConcertSong.create(
+      new_song = ConcertSong.find_or_initialize_by(
         song_id: Song.find_by(song_name: song).id,
-        play_index: index,
+        play_index: song_index,
         set_index: 1,
-        concert_id: new_concert.id
+        concert_id: new_concert.id,
+        songs_in_set: concert_data_hash[:set_one_array].count
       )
-      index += 1
+      song_index += 1
+      new_song.save
     end
 
+    song_index = 1
     concert_data_hash[:set_two_array].each do |song|
-      index = 0
-      ConcertSong.create(
+      new_song = ConcertSong.find_or_initialize_by(
       song_id: Song.find_by(song_name: song).id,
-      play_index: index,
+      play_index: song_index,
       set_index: 2,
-      concert_id: new_concert.id
+      concert_id: new_concert.id,
+      songs_in_set: concert_data_hash[:set_two_array].count
       )
-      index += 1
+      song_index += 1
+      new_song.save
     end
 
+    song_index = 1
     concert_data_hash[:encore_array].each do |song|
-      index = 0
-      ConcertSong.create(
+      new_song = ConcertSong.find_or_initialize_by(
       song_id: Song.find_by(song_name: song).id,
-      play_index: index,
+      play_index: song_index,
       set_index: 3,
-      concert_id: new_concert.id
+      concert_id: new_concert.id,
+      songs_in_set: concert_data_hash[:encore_array].count
       )
-      index += 1
+      song_index += 1
+      new_song.save
     end
-
-
-
-
-
-
-    # PASS RANDOM SHOW AS OBJECT HERE?
-    # new_concert
   end
 end
