@@ -5,8 +5,8 @@ As a bored Phishhead waiting for Phish to go back on tour
 I'd like to check my predictions against an upcoming show
 So that I can practice my prediction skills
 Acceptance criteria
-[ ] A user can submit a prediction for an upcoming show
-[ ] A user is given errors if they don't submit valid data
+[x] A user can submit a prediction for an upcoming show
+[x] A user is given errors if they don't submit valid data
 [ ] A user should be given a total of points based on their predictions
 
 
@@ -48,4 +48,36 @@ Acceptance criteria
 
     expect(page).to have_content "You need to sign in or sign up before continuing"
   end
+
+
+  scenario "A user checks their score from a prediction" do
+    # REFACTOR LATER TO DRY UP CODE
+    concert = FactoryGirl.create(:concert)
+
+    user = FactoryGirl.create(:user)
+
+    sign_in_as(user)
+
+    visit dashboard_index_path
+    click_link "Upcoming Shows"
+
+    click_link concert.concert_date
+    click_link "Make your predictions"
+
+    select('A Song I Heard the Ocean Sing', from: "Set One Opener")
+    select("Kill Devil Falls", from: "Set One Closer")
+    select("Golden Age", from: "Set Two Opener")
+    select("Harry Hood", from: "Set Two Closer")
+    select("Harry Hood", from: "Encore")
+    select("Free", from: "Random Pick")
+
+    click_on "Submit Predictions"
+    click_on "Check Score"
+
+    expect(page).to have_content "Your total score is:"
+  end
+
+
+
+
 end
