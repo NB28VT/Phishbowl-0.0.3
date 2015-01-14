@@ -42,6 +42,22 @@ class Song < ActiveRecord::Base
           gap = nil
         end
 
+        if title == "Big Black Furry Creature from ..."
+          title = "Big Black Furry Creature from Mars"
+        elsif title == "Come On Baby, Let's Go Downtow..."
+          title = "Come On Baby, Let's Go Downtown"
+        elsif title == "Long Cool Woman in a Black Dre..."
+          title = "Long Cool Woman in a Black Dress"
+        elsif title == "McGrupp and the Watchful Hosem..."
+          title = "McGrupp and the Watchful Hosemasters"
+        elsif title == "My Mind's Got a Mind of its Ow..."
+          title = "My Mind's Got a Mind of its Own"
+        elsif title == "Stealing Time From the Faulty ..."
+          title = "Stealing Time From the Faulty Plan"
+        elsif title == "The Man Who Stepped Into Yeste..."
+          title = "The Man Who Stepped Into Yesterday"
+        end
+
         song_info["artist"] = artist
         song_info["gap"] = gap
 

@@ -1,6 +1,9 @@
-# switch song to title?
-# IS THIS ACTUALLY UPDATING IF THE RECORD EXISTS?
+# NEED TO HANDLE EXCEPTIONS HERE: SONGS THAT ARE SHORTENED ON WEBSITE
 song_hash = Song.load_song_table
+
+# one time plays removed
+
+
 
 
 song_hash.each do |song_data|

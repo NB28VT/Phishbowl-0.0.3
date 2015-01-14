@@ -39,17 +39,22 @@ class Concert < ActiveRecord::Base
 
     concert_data_hash[:set_two_array] = set_two
 
-    encore = []
 
     # breaks if no encore. IF THERE IS AN ENCORE? Still doesn't work
 
-    encore_data = setlist.css('p')[2]
+    if setlist.css('p')[2]
 
-    encore_data.css('a').each do |song|
-      encore << song.children.text
+      encore = []
+
+      encore_data = setlist.css('p')[2]
+
+      encore_data.css('a').each do |song|
+        encore << song.children.text
+      end
+      concert_data_hash[:encore_array] = encore
+    else
+      concert_data_hash[:encore_array] = nil
     end
-
-    concert_data_hash[:encore_array] = encore
 
     concert_data_hash
   end
@@ -110,17 +115,21 @@ class Concert < ActiveRecord::Base
       new_song.save
     end
 
-    song_index = 1
-    concert_data_hash[:encore_array].each do |song|
-      new_song = ConcertSong.find_or_initialize_by(
-      song_id: Song.find_by(song_name: song).id,
-      play_index: song_index,
-      set_index: 3,
-      concert_id: new_concert.id,
-      songs_in_set: concert_data_hash[:encore_array].count
-      )
-      song_index += 1
-      new_song.save
+    # if encore array is empty
+
+    if concert_data_hash[:encore_array].count > 0
+      song_index = 1
+      concert_data_hash[:encore_array].each do |song|
+        new_song = ConcertSong.find_or_initialize_by(
+        song_id: Song.find_by(song_name: song).id,
+        play_index: song_index,
+        set_index: 3,
+        concert_id: new_concert.id,
+        songs_in_set: concert_data_hash[:encore_array].count
+        )
+        song_index += 1
+        new_song.save
+      end
     end
   end
 end
