@@ -23,6 +23,9 @@ class Song < ActiveRecord::Base
     class_name: 'Prediction',
     foreign_key: 'random_pick_song_id'
 
+  has_many :concert_songs
+  has_many :concerts, through: :concert_songs  
+
   def self.load_song_table
 
     load_song_page = HTTParty.get("http://phish.net/song/")

@@ -1,5 +1,7 @@
 class Concert < ActiveRecord::Base
   has_many :predictions
+  has_many :concert_songs
+  has_many :songs, through: :concert_songs
   validates :concert_date, uniqueness: true
 
   Dotenv.load
@@ -86,9 +88,6 @@ class Concert < ActiveRecord::Base
     # find or initialize by on song id?
 
     # DRY UP THIS CODE AFTER WORKS
-
-    # CODE WORKS. NEED TO HANDLE NIL SETS!!!!
-
     song_index = 1
     concert_data_hash[:set_one_array].each do |song|
       new_song = ConcertSong.find_or_initialize_by(
@@ -115,9 +114,8 @@ class Concert < ActiveRecord::Base
       new_song.save
     end
 
-    # if encore array is empty
-
-    if concert_data_hash[:encore_array].count > 0
+    # Handles if encore array is empty
+    if concert_data_hash[:encore_array]
       song_index = 1
       concert_data_hash[:encore_array].each do |song|
         new_song = ConcertSong.find_or_initialize_by(
