@@ -24,7 +24,7 @@ class Song < ActiveRecord::Base
     foreign_key: 'random_pick_song_id'
 
   has_many :concert_songs
-  has_many :concerts, through: :concert_songs  
+  has_many :concerts, through: :concert_songs
 
   def self.load_song_table
 
