@@ -29,20 +29,23 @@ RSpec.describe Prediction, :type => :model do
   end
 
   it "Calculates a prediction score" do
-    Concert.create_random_show
 
-    new_show = Concert.first
+    50.times do
+      Concert.create_random_show
 
-    prediction = Prediction.new
+      new_show = Concert.first
 
-    prediction.user_id = 1
-    prediction.concert_id = new_show.id
-    prediction.set_one_closer_song_id = 1
-    prediction.set_two_opener_song_id = 2
-    prediction.set_one_opener_song_id = 3
-    prediction.encore_song_id = 4
-    prediction.random_pick_song_id = 5
-    score = prediction.get_prediction_score
+      prediction = Prediction.new
+
+      prediction.user_id = 1
+      prediction.concert_id = new_show.id
+      prediction.set_one_closer_song_id = 123
+      prediction.set_two_opener_song_id = 234
+      prediction.set_one_opener_song_id = 456
+      prediction.encore_song_id = 567
+      prediction.random_pick_song_id = 345
+      prediction.get_prediction_score
+    end
   end
 
 

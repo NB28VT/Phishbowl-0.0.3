@@ -102,6 +102,7 @@ class Concert < ActiveRecord::Base
     end
 
     song_index = 1
+    # KEEPS SNAGGING HERE. NIL VALUES?
     concert_data_hash[:set_two_array].each do |song|
       new_song = ConcertSong.find_or_initialize_by(
       song_id: Song.find_by(song_name: song).id,
