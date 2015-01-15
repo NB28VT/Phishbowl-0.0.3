@@ -86,7 +86,6 @@ class Concert < ActiveRecord::Base
     new_concert.save
 
     # find or initialize by on song id?
-
     # DRY UP THIS CODE AFTER WORKS
     song_index = 1
     concert_data_hash[:set_one_array].each do |song|

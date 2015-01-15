@@ -4,7 +4,6 @@ require 'rails_helper'
 def create_concert_songs(new_show)
 
     ConcertSong.create(
-      song_id: Song.find_by(song_name: "Harry Hood").id,
       play_index: 1,
       set_index: 1,
       concert_id: new_show.id,
