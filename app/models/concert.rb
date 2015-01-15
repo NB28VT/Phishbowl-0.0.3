@@ -21,12 +21,4 @@ class Concert < ActiveRecord::Base
     "https://api.phish.net/api.json?api=2.0&method=pnet.shows.setlists.latest"
     )
   end
-
-
-
-  # RANDOM SHOW GENERATOR CLASS
-
-  def self.create_random_show
-  end
-
 end

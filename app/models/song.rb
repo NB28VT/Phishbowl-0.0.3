@@ -30,11 +30,25 @@ class Song < ActiveRecord::Base
 
   def self.load_song_table
 
+    # NEED EXCEPTION HANDLING HERE
+
     load_song_page = HTTParty.get("http://phish.net/song/")
     parsed_song_page = Nokogiri::HTML(load_song_page)
     song_rows = parsed_song_page.css('tr')
 
     songs_hash = {}
+
+    # Accounts for songs with trunacated names on scraped web page
+    truncated_song_hash = {
+      "Big Black Furry Creature from ..." => "Big Black Furry Creature from Mars",
+      "Come On Baby, Let's Go Downtow..." => "Come On Baby, Let's Go Downtown",
+      "Long Cool Woman in a Black Dre..." =>"Long Cool Woman in a Black Dress",
+      "McGrupp and the Watchful Hosem..." => "McGrupp and the Watchful Hosemasters",
+      "My Mind's Got a Mind of its Ow..." => "My Mind's Got a Mind of its Own",
+      "Stealing Time From the Faulty ..." => "Stealing Time From the Faulty Plan",
+      "The Man Who Stepped Into Yeste..." => "The Man Who Stepped Into Yesterday",
+      "Sneakin' Sally Through the All..." => "Sneakin' Sally Through the Alley"
+    }
 
     song_rows.each do |song|
       if song.children.children[2].text != "1"
@@ -47,24 +61,8 @@ class Song < ActiveRecord::Base
           gap = nil
         end
 
-        # USE A HASH FOR THIS
-
-        if title == "Big Black Furry Creature from ..."
-          title = "Big Black Furry Creature from Mars"
-        elsif title == "Come On Baby, Let's Go Downtow..."
-          title = "Come On Baby, Let's Go Downtown"
-        elsif title == "Long Cool Woman in a Black Dre..."
-          title = "Long Cool Woman in a Black Dress"
-        elsif title == "McGrupp and the Watchful Hosem..."
-          title = "McGrupp and the Watchful Hosemasters"
-        elsif title == "My Mind's Got a Mind of its Ow..."
-          title = "My Mind's Got a Mind of its Own"
-        elsif title == "Stealing Time From the Faulty ..."
-          title = "Stealing Time From the Faulty Plan"
-        elsif title == "The Man Who Stepped Into Yeste..."
-          title = "The Man Who Stepped Into Yesterday"
-        elsif title == "Sneakin' Sally Through the All..."
-          title = "Sneakin' Sally Through the Alley"
+        if truncated_song_hash.has_key?(title)
+          title = truncated_song_hash[title]
         end
 
         song_info["artist"] = artist
