@@ -22,11 +22,7 @@ class Concert < ActiveRecord::Base
     )
   end
 
-  def self.load_random_show
-    show_loader(
-    "https://api.phish.net/api.json?api=2.0&method=pnet.shows.setlists.random"
-    )
-  end
+
 
   # RANDOM SHOW GENERATOR CLASS
 

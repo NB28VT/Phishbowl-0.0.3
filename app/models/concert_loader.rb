@@ -6,6 +6,7 @@ class ConcertLoader
 
     concert = HTTParty.get(api_call)
 
+
     jsoned = JSON.parse(concert)
 
     concert_data_hash = {}
