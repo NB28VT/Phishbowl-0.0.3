@@ -1,7 +1,7 @@
-class ShowLoader
+class ConcertLoader
 
 
-  def show_loader(api_call)
+  def concert_loader(api_call)
     # Exception handling methdos and resuces
 
     concert = HTTParty.get(api_call)
@@ -61,8 +61,8 @@ class ShowLoader
     concert_data_hash
   end
 
-  def show_builder(api_call)
-    concert_data_hash = show_loader(api_call)
+  def concert_builder(api_call)
+    concert_data_hash = concert_loader(api_call)
 
     new_concert = Concert.find_or_initialize_by(
     concert_date: concert_data_hash[:concert_date],
@@ -122,12 +122,5 @@ class ShowLoader
     end
     new_concert
   end
-
-
-
-
-
-
-
 
 end
