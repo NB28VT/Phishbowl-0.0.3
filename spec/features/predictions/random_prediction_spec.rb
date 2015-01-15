@@ -20,9 +20,10 @@ Acceptance criteria
     sign_in_as(user)
 
     visit dashboard_index_path
-    click_link "Add Random Show"
 
-    click_link "Make your predictions"
+    click_link "Play with random concert"
+
+    click_link "Play Phantasy Phishbowl!"
 
     select('A Song I Heard the Ocean Sing', from: "Set One Opener")
     select("Kill Devil Falls", from: "Set One Closer")
@@ -32,9 +33,20 @@ Acceptance criteria
     select("Free", from: "Random Pick")
 
     click_on "Submit Predictions"
+
     click_on "Check your score"
 
+    save_and_open_page
 
     expect(page).to have_content ("Your score is.....")
+  end
+
+
+  scenario "A user can edit predictions for a random show" do
+
+
+
+
+
   end
 end

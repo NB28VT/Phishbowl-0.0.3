@@ -91,7 +91,7 @@ class Concert < ActiveRecord::Base
     song_index = 1
     concert_data_hash[:set_one_array].each do |song|
       new_song = ConcertSong.find_or_initialize_by(
-        song_id: Song.find_by(song_name: song).id,
+        song_id: (Song.find_or_initialize_by(song_name: song)).id,
         play_index: song_index,
         set_index: 1,
         concert_id: new_concert.id,
@@ -102,10 +102,9 @@ class Concert < ActiveRecord::Base
     end
 
     song_index = 1
-    # KEEPS SNAGGING HERE. NIL VALUES?
     concert_data_hash[:set_two_array].each do |song|
       new_song = ConcertSong.find_or_initialize_by(
-      song_id: Song.find_by(song_name: song).id,
+      song_id: (Song.find_or_initialize_by(song_name: song)).id,
       play_index: song_index,
       set_index: 2,
       concert_id: new_concert.id,
@@ -120,7 +119,7 @@ class Concert < ActiveRecord::Base
       song_index = 1
       concert_data_hash[:encore_array].each do |song|
         new_song = ConcertSong.find_or_initialize_by(
-        song_id: Song.find_by(song_name: song).id,
+        song_id: (Song.find_or_initialize_by(song_name: song)).id,
         play_index: song_index,
         set_index: 3,
         concert_id: new_concert.id,
@@ -130,5 +129,6 @@ class Concert < ActiveRecord::Base
         new_song.save
       end
     end
+    new_concert
   end
 end

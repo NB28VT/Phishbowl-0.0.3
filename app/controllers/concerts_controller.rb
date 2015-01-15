@@ -1,13 +1,10 @@
 class ConcertsController < ApplicationController
   def index
-    # REPLACE WITH UPCOMING CONCERTS
-    # @concerts = Concert.all
-    @random_concert = Concert.create_random_show
+    # Upcoming shows?
   end
 
   def show
     @concert = Concert.find(params[:id])
-    @predictions = @concert.prediction
   end
 
   private

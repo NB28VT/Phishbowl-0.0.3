@@ -1,17 +1,91 @@
 require 'rails_helper'
 
+# NEED TO DRY THIS UP
+def create_concert_songs(new_show)
+
+    ConcertSong.create(
+      song_id: Song.find_by(song_name: "Harry Hood").id,
+      play_index: 1,
+      set_index: 1,
+      concert_id: new_show.id,
+      songs_in_set: 3
+    )
+
+    ConcertSong.create(
+    song_id: Song.find_by(song_name: "Suzy Greenberg").id,
+    play_index: 2,
+    set_index: 1,
+    concert_id: new_show.id,
+    songs_in_set: 3
+    )
+
+    ConcertSong.create(
+    song_id: Song.find_by(song_name: "David Bowie").id,
+    play_index: 3,
+    set_index: 1,
+    concert_id: new_show.id,
+    songs_in_set: 3
+    )
+
+    # second set
+
+    ConcertSong.create(
+    song_id: Song.find_by(song_name: "AC/DC Bag").id,
+    play_index: 1,
+    set_index: 2,
+    concert_id: new_show.id,
+    songs_in_set: 3
+    )
+
+    ConcertSong.create(
+    song_id: Song.find_by(song_name: "Run Like an Antelope").id,
+    play_index: 2,
+    set_index: 2,
+    concert_id: new_show.id,
+    songs_in_set: 3
+    )
+
+    ConcertSong.create(
+    song_id: Song.find_by(song_name: "Contact").id,
+    play_index: 3,
+    set_index: 2,
+    concert_id: new_show.id,
+    songs_in_set: 3
+    )
+
+    # encore
+    ConcertSong.create(
+    song_id: Song.find_by(song_name: "Chalk Dust Torture").id,
+    play_index: 1,
+    set_index: 3,
+    concert_id: new_show.id,
+    songs_in_set: 1
+    )
+
+end
+
+def create_concert_prediction(new_show)
+
+  Prediction.create(
+    user_id: 1,
+    concert_id: new_show.id,
+    set_one_opener_song_id: Song.find_by(song_name: "Harry Hood").id,
+    set_one_closer_song_id: Song.find_by(song_name: "David Bowie").id,
+    set_two_opener_song_id: Song.find_by(song_name: "AC/DC Bag").id,
+    set_two_closer_song_id: Song.find_by(song_name: "Contact").id,
+    encore_song_id: Song.find_by(song_name: "Chalk Dust Torture").id,
+    random_pick_song_id: Song.find_by(song_name: "Run Like an Antelope").id
+  )
+
+end
+
 RSpec.describe Prediction, :type => :model do
   it "allows a user to enter a valid prediction" do
-    prediction = Prediction.new
+    new_show = FactoryGirl.build(:concert)
+    new_show.save!
 
-    prediction.user_id = 1
-    prediction.concert_id = 1
-    prediction.set_one_opener_song_id = 1
-    prediction.set_one_closer_song_id = 2
-    prediction.set_two_opener_song_id = 3
-    prediction.set_two_closer_song_id = 4
-    prediction.encore_song_id = 5
-    prediction.random_pick_song_id = 1
+    create_concert_songs(new_show)
+    prediction = create_concert_prediction(new_show)
 
     expect(prediction.save).to eq(true)
   end
@@ -28,34 +102,15 @@ RSpec.describe Prediction, :type => :model do
     expect(prediction.save).to eq(false)
   end
 
-  it "Calculates a prediction score" do
+  it "Calculates a prediction score for maximum points" do
 
-    50.times do
-      Concert.create_random_show
+      new_show = FactoryGirl.build(:concert)
+      new_show.save!
 
-      new_show = Concert.first
+      create_concert_songs(new_show)
+      prediction = create_concert_prediction(new_show)
+      prediction.save!
 
-      prediction = Prediction.new
-
-      prediction.user_id = 1
-      prediction.concert_id = new_show.id
-      prediction.set_one_closer_song_id = 123
-      prediction.set_two_opener_song_id = 234
-      prediction.set_one_opener_song_id = 456
-      prediction.encore_song_id = 567
-      prediction.random_pick_song_id = 345
-      prediction.get_prediction_score
-    end
+      expect(prediction.get_prediction_score).to eq(17)
   end
-
-
-
-
-
-
-
-
-
-
-
 end

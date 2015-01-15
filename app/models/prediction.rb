@@ -88,7 +88,8 @@ class Prediction < ActiveRecord::Base
   end
 
   def check_random_pick
-    if @actual_setlist.include?(self.random_pick_song)
+
+    if @actual_setlist.any?{ |song_id| song_id = self.random_pick_song.id }
       @prediction_score += 2
     end
   end
@@ -104,31 +105,6 @@ class Prediction < ActiveRecord::Base
     check_encore
     check_random_pick
 
-    # testing prediction score
     @prediction_score
   end
-
-
-
-    # songs_in_first_set = self.concert.concert_songs.first.songs_in_set
-    #
-    # # Find song object for place in set
-    # actual_set_one_opener = Song.find_by(
-    #   id:(actual_setlist.find_by(play_index: 1, set_index: 1).song_id))
-    #
-    # #find last song in set using first song songs in set
-    #
-
-    #
-    # actual_set_two_opener = Song.find_by(
-    #   id:(actual_setlist.find_by(play_index: 1, set_index: 2).song_id))
-    #
-    # actual_set_two_closer = Song.find_by(
-    #   id:(actual_setlist.find_by(play_index: songs_in_second_set, set_index:
-    #   1).song_id))
-    #
-    # # NEED TO DRY THIS UP
-
-
-
 end

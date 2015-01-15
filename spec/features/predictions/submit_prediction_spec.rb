@@ -12,72 +12,42 @@ Acceptance criteria
 
 ) do
 
-  scenario "A user can sign in and enter a valid prediction" do
-    concert = FactoryGirl.create(:concert)
-
-    user = FactoryGirl.create(:user)
-
-    sign_in_as(user)
-
-    visit dashboard_index_path
-    click_link "Upcoming Shows"
-
-    click_link concert.concert_date
-    click_link "Make your predictions"
-
-    select('A Song I Heard the Ocean Sing', from: "Set One Opener")
-    select("Kill Devil Falls", from: "Set One Closer")
-    select("Golden Age", from: "Set Two Opener")
-    select("Harry Hood", from: "Set Two Closer")
-    select("Harry Hood", from: "Encore")
-    select("Free", from: "Random Pick")
-
-    click_on "Submit Predictions"
-
-    expect(page).to have_content "Predictions submitted!"
-    expect(page).to have_content "A Song I Heard the Ocean Sing"
-  end
-
-  scenario "A user must be signed in to enter a prediction" do
-    concert = FactoryGirl.create(:concert)
-
-    visit dashboard_index_path
-    click_link "Upcoming Shows"
-    click_link concert.concert_date
-    click_link "Make your predictions"
-
-    expect(page).to have_content "You need to sign in or sign up before continuing"
-  end
-
-
-  scenario "A user checks their score from a prediction" do
-    # REFACTOR LATER TO DRY UP CODE
-    concert = FactoryGirl.create(:concert)
-
-    user = FactoryGirl.create(:user)
-
-    sign_in_as(user)
-
-    visit dashboard_index_path
-    click_link "Upcoming Shows"
-
-    click_link concert.concert_date
-    click_link "Make your predictions"
-
-    select('A Song I Heard the Ocean Sing', from: "Set One Opener")
-    select("Kill Devil Falls", from: "Set One Closer")
-    select("Golden Age", from: "Set Two Opener")
-    select("Harry Hood", from: "Set Two Closer")
-    select("Harry Hood", from: "Encore")
-    select("Free", from: "Random Pick")
-
-    click_on "Submit Predictions"
-    click_on "Check Score"
-
-    expect(page).to have_content "Your total score is:"
-  end
-
-
-
+  # scenario "A user can sign in and enter a valid prediction" do
+  #   concert = FactoryGirl.create(:concert)
+  #
+  #   user = FactoryGirl.create(:user)
+  #
+  #   sign_in_as(user)
+  #
+  #   visit dashboard_index_path
+  #   click_link "Upcoming Shows"
+  #
+  #   click_link concert.concert_date
+  #   click_link "Make your predictions"
+  #
+  #   select('A Song I Heard the Ocean Sing', from: "Set One Opener")
+  #   select("Kill Devil Falls", from: "Set One Closer")
+  #   select("Golden Age", from: "Set Two Opener")
+  #   select("Harry Hood", from: "Set Two Closer")
+  #   select("Harry Hood", from: "Encore")
+  #   select("Free", from: "Random Pick")
+  #
+  #   click_on "Submit Predictions"
+  #
+  #   expect(page).to have_content "Predictions submitted!"
+  #   expect(page).to have_content "A Song I Heard the Ocean Sing"
+  # end
+  #
+  # scenario "A user must be signed in to enter a prediction" do
+  #   concert = FactoryGirl.create(:concert)
+  #
+  #   visit dashboard_index_path
+  #   click_link "Upcoming Shows"
+  #   click_link concert.concert_date
+  #   click_link "Make your predictions"
+  #
+  #   expect(page).to have_content "You need to sign in or sign up before continuing"
+  # end
+  #
 
 end
