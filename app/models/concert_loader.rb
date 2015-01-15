@@ -21,7 +21,6 @@ class ConcertLoader
 
     # read nokogiri exceptions in parsing html
 
-
     # LOOK INTO ARRAY USING INDEXES
 
     set_one = []
