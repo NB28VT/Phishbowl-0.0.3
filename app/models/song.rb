@@ -26,6 +26,8 @@ class Song < ActiveRecord::Base
   has_many :concert_songs
   has_many :concerts, through: :concert_songs
 
+  # use instance methods!
+
   def self.load_song_table
 
     load_song_page = HTTParty.get("http://phish.net/song/")
@@ -45,6 +47,8 @@ class Song < ActiveRecord::Base
           gap = nil
         end
 
+        # USE A HASH FOR THIS
+
         if title == "Big Black Furry Creature from ..."
           title = "Big Black Furry Creature from Mars"
         elsif title == "Come On Baby, Let's Go Downtow..."
@@ -59,6 +63,8 @@ class Song < ActiveRecord::Base
           title = "Stealing Time From the Faulty Plan"
         elsif title == "The Man Who Stepped Into Yeste..."
           title = "The Man Who Stepped Into Yesterday"
+        elsif title == "Sneakin' Sally Through the All..."
+          title = "Sneakin' Sally Through the Alley"
         end
 
         song_info["artist"] = artist
