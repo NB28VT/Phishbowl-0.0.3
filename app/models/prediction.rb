@@ -23,13 +23,16 @@ class Prediction < ActiveRecord::Base
   belongs_to :random_pick_song,
    class_name: "Song", foreign_key: "random_pick_song_id"
 
-   #use foxy validations
-  validates_presence_of :set_one_opener_song
-  validates_presence_of :set_one_closer_song_id
-  validates_presence_of :set_two_opener_song_id
-  validates_presence_of :set_two_closer_song_id
-  validates_presence_of :encore_song_id
-  validates_presence_of :random_pick_song_id
-
-
+  validates :set_one_opener_song_id,
+    presence: true
+  validates :set_one_closer_song_id,
+    presence: true
+  validates :set_two_opener_song_id,
+    presence: true
+  validates :set_two_closer_song_id,
+    presence: true
+  validates :encore_song_id,
+    presence: true
+  validates :random_pick_song_id,
+    presence: true
 end
