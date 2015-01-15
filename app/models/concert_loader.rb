@@ -1,20 +1,33 @@
 class ConcertLoader
 
+  def web_request(api_call)
+    begin
+      HTTParty.get(api_call)
+    rescue HTTParty::Error
+      return false
+    end
+  end
+  
+  def json_parser(raw_concert)
+    begin
+      JSON.parse(raw_concert)
+    rescue JSON::JSONError
+      return false
+    end
+  end
+
+  def scrape_set_html(setlist_data)
+    begin
+      Nokogiri::HTML(setlist_data)
+    rescue Nokogiri::XML::SyntaxError
+      return false
+    end
+  end
 
   def concert_loader(api_call)
-    # Exception handling methdos and resuces
+    raw_concert = web_request(api_call)
 
-    concert = HTTParty.get(api_call)
-
-    # CHECK HTTParty readme for interupts
-    # google interacting API, handling common exceptions RUBY
-
-    # CONCERT LOADER TRUE OR FALSE, IF FALSE, CONTROLLER MESSAGE USER
-
-    # RETURN FALSE IF EXCEPTION RAISED
-
-
-    jsoned = JSON.parse(concert)
+    jsoned = json_parser(raw_concert)
 
     concert_data_hash = {}
 
@@ -24,7 +37,8 @@ class ConcertLoader
     concert_data_hash[:venue] = jsoned[0]["venue"]
 
     setlist_data = jsoned[0]["setlistdata"]
-    setlist = Nokogiri::HTML(setlist_data)
+
+    setlist = scrape_set_html(setlist_data)
 
     # read nokogiri exceptions in parsing html
 
