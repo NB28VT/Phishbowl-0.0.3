@@ -79,7 +79,6 @@ def create_concert_prediction(new_show)
 end
 
 
-
 RSpec.describe PredictionCalculator, :type => :model do
 
   it "Calculates a prediction score for maximum points" do
