@@ -16,7 +16,7 @@ RSpec.describe ConcertLoader, :type => :model do
     new_concert.concert_builder(
       "https://phish.net/"
     )
-
+ 
     expect(Concert.count).to eq(0)
   end
 

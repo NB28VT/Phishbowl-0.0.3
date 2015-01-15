@@ -81,13 +81,19 @@ end
 
 
 RSpec.describe PredictionCalculator, :type => :model do
-  it "allows a user to enter a valid prediction" do
+
+  it "Calculates a prediction score for maximum points" do
+
+    new_show = FactoryGirl.build(:concert)
+    new_show.save!
+
     new_show = FactoryGirl.build(:concert)
     new_show.save!
 
     create_concert_songs(new_show)
     prediction = create_concert_prediction(new_show)
+    calculator = PredictionCalculator.new
 
-    expect(prediction.save).to eq(true)
+    expect(calculator.get_prediction_score(prediction)).to eq(17)
   end
 end

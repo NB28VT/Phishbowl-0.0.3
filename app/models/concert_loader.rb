@@ -6,6 +6,13 @@ class ConcertLoader
 
     concert = HTTParty.get(api_call)
 
+    # CHECK HTTParty readme for interupts
+    # google interacting API, handling common exceptions RUBY
+
+    # CONCERT LOADER TRUE OR FALSE, IF FALSE, CONTROLLER MESSAGE USER
+
+    # RETURN FALSE IF EXCEPTION RAISED
+
 
     jsoned = JSON.parse(concert)
 

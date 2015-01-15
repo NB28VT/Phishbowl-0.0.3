@@ -108,6 +108,8 @@ RSpec.describe Prediction, :type => :model do
 
       create_concert_songs(new_show)
       prediction = create_concert_prediction(new_show)
+      calculator = PredictionCalculator.new
+      calculator.get_prediction_score(prediction)
       prediction.save!
 
       expect(prediction.get_prediction_score).to eq(17)
