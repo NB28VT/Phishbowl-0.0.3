@@ -1,6 +1,31 @@
-<%= link_to "Enter!" dashboard_index_path %>
 
-<p>
-  Modify me in `app/views/homes/index.html.erb` or change the root directive in
-  `config/routes.rb`
-</p>
+<div class="row bubbles">
+  <div class="large-12 columns logo ">
+    <p><%= image_tag("pbowllogo.png") %></p>
+    <p><%= image_tag("nb-super-ball.jpg", class: "logo-image" ) %></p>
+    <a class="bubble-toggle" href="#">Bubbles Off</a>
+  </div>
+  <div class="row home">
+    <div class="large-12 columns">
+      <div class="panel">
+        <h4></h4>
+
+
+
+        <div class="row">
+          <div class="large-9 columns">
+            <p>Phantasy Phishbowl is super awesome</p>
+          </div>
+          <div class="large-3 columns">
+            <a href="#" class="radius button right">Sign In</a>
+            <a href="#" class="radius button right">Sign Up</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<%= link_to "Enter!", dashboard_index_path %>
