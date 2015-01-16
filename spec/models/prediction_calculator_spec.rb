@@ -1,65 +1,34 @@
 require 'rails_helper'
 
+def concert_song_builder(song_name, play_index, set_index, new_show, songs_in_set)
+  ConcertSong.create(
+  song_id: Song.find_by(song_name: song_name).id,
+  play_index: play_index,
+  set_index: set_index,
+  concert_id: new_show.id,
+  songs_in_set: songs_in_set
+  )
+end
+
 def create_concert_songs(new_show)
 
-  ConcertSong.create(
-  song_id: Song.find_by(song_name: "Harry Hood").id,
-  play_index: 1,
-  set_index: 1,
-  concert_id: new_show.id,
-  songs_in_set: 3
-  )
+  first_set_songs = ["Harry Hood", "Suzy Greenberg", "David Bowie"]
+  second_set_songs = ["AC/DC Bag", "Run Like an Antelope", "Contact"]
 
-  ConcertSong.create(
-  song_id: Song.find_by(song_name: "Suzy Greenberg").id,
-  play_index: 2,
-  set_index: 1,
-  concert_id: new_show.id,
-  songs_in_set: 3
-  )
+  play_index = 1
+  first_set_songs.each do |song|
+    concert_song_builder(song, play_index, 1, new_show, first_set_songs.count)
+    play_index += 1
+  end
 
-  ConcertSong.create(
-  song_id: Song.find_by(song_name: "David Bowie").id,
-  play_index: 3,
-  set_index: 1,
-  concert_id: new_show.id,
-  songs_in_set: 3
-  )
+  play_index = 1
+  second_set_songs.each do |song|
+    concert_song_builder(song, play_index, 2, new_show, first_set_songs.count)
+    play_index += 1
+  end
 
-  # second set
-
-  ConcertSong.create(
-  song_id: Song.find_by(song_name: "AC/DC Bag").id,
-  play_index: 1,
-  set_index: 2,
-  concert_id: new_show.id,
-  songs_in_set: 3
-  )
-
-  ConcertSong.create(
-  song_id: Song.find_by(song_name: "Run Like an Antelope").id,
-  play_index: 2,
-  set_index: 2,
-  concert_id: new_show.id,
-  songs_in_set: 3
-  )
-
-  ConcertSong.create(
-  song_id: Song.find_by(song_name: "Contact").id,
-  play_index: 3,
-  set_index: 2,
-  concert_id: new_show.id,
-  songs_in_set: 3
-  )
-
-  # encore
-  ConcertSong.create(
-  song_id: Song.find_by(song_name: "Chalk Dust Torture").id,
-  play_index: 1,
-  set_index: 3,
-  concert_id: new_show.id,
-  songs_in_set: 1
-  )
+  # build encore song
+  concert_song_builder("Chalk Dust Torture", 1, 3, new_show, 1)
 
 end
 
@@ -82,9 +51,6 @@ end
 RSpec.describe PredictionCalculator, :type => :model do
 
   it "Calculates a prediction score for maximum points" do
-
-    new_show = FactoryGirl.build(:concert)
-    new_show.save!
 
     new_show = FactoryGirl.build(:concert)
     new_show.save!

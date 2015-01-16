@@ -1,5 +1,7 @@
 class ConcertLoader
 
+  # DATA FORMATTING
+
   def web_request(api_call)
     begin
       HTTParty.get(api_call)
@@ -7,7 +9,7 @@ class ConcertLoader
       return false
     end
   end
-  
+
   def json_parser(raw_concert)
     begin
       JSON.parse(raw_concert)
@@ -24,6 +26,19 @@ class ConcertLoader
     end
   end
 
+  def parse_setlist(css_index)
+    full_set = []
+    set_data = @setlist.css('p')[css_index]
+
+    set_data.css('a').each do |song|
+      full_set << song.children.text
+    end
+
+    full_set
+  end
+
+  # LOAD CONCERT DATA
+
   def concert_loader(api_call)
     raw_concert = web_request(api_call)
 
@@ -35,52 +50,40 @@ class ConcertLoader
     concert_data_hash[:city] = jsoned[0]["city"]
     concert_data_hash[:state] = jsoned[0]["state"]
     concert_data_hash[:venue] = jsoned[0]["venue"]
-
     setlist_data = jsoned[0]["setlistdata"]
 
-    setlist = scrape_set_html(setlist_data)
+    @setlist = scrape_set_html(setlist_data)
 
-    # read nokogiri exceptions in parsing html
+    concert_data_hash[:set_one_array] = parse_setlist(0)
+    concert_data_hash[:set_two_array] = parse_setlist(1)
 
-    # LOOK INTO ARRAY USING INDEXES
-
-    set_one = []
-
-    first_set_data = setlist.css('p')[0]
-
-    first_set_data.css('a').each do |song|
-      set_one << song.children.text
-    end
-
-    concert_data_hash[:set_one_array] = set_one
-
-    set_two = []
-
-    second_set_data = setlist.css('p')[1]
-
-    second_set_data.css('a').each do |song|
-      set_two << song.children.text
-    end
-
-    concert_data_hash[:set_two_array] = set_two
-
-
-    if setlist.css('p')[2]
-
-      encore = []
-
-      encore_data = setlist.css('p')[2]
-
-      encore_data.css('a').each do |song|
-        encore << song.children.text
-      end
-      concert_data_hash[:encore_array] = encore
+    if @setlist.css('p')[2]
+      concert_data_hash[:encore_array] = parse_setlist(2)
     else
       concert_data_hash[:encore_array] = nil
     end
 
     concert_data_hash
   end
+
+  # BUILDS CONCERT SONGS IN DATABASE
+
+  def load_songs_for_concert(set_array, set_index, new_concert)
+    song_index = 1
+    set_array.each do |song|
+      new_song = ConcertSong.find_or_initialize_by(
+      song_id: (Song.find_or_initialize_by(song_name: song)).id,
+      play_index: song_index,
+      set_index: set_index,
+      concert_id: new_concert.id,
+      songs_in_set: set_array.count
+      )
+      song_index += 1
+      new_song.save!
+    end
+  end
+
+  # MAIN METHOD
 
   def concert_builder(api_call)
     concert_data_hash = concert_loader(api_call)
@@ -91,57 +94,15 @@ class ConcertLoader
     state: concert_data_hash[:state],
     venue: concert_data_hash[:venue]
     )
-
-    # ALWAYS USE SAVE! in case not user, api input
     new_concert.save!
 
-    # find or initialize by on song id?
-    # DRY UP THIS CODE AFTER WORKS
+    load_songs_for_concert(concert_data_hash[:set_one_array], 1, new_concert)
+    load_songs_for_concert(concert_data_hash[:set_two_array], 2, new_concert)
 
-
-    # USE ARRAY
-    song_index = 1
-    concert_data_hash[:set_one_array].each do |song|
-      new_song = ConcertSong.find_or_initialize_by(
-      song_id: (Song.find_or_initialize_by(song_name: song)).id,
-      play_index: song_index,
-      set_index: 1,
-      concert_id: new_concert.id,
-      songs_in_set: concert_data_hash[:set_one_array].count
-      )
-      song_index += 1
-      new_song.save!
-    end
-
-    song_index = 1
-    concert_data_hash[:set_two_array].each do |song|
-      new_song = ConcertSong.find_or_initialize_by(
-      song_id: (Song.find_or_initialize_by(song_name: song)).id,
-      play_index: song_index,
-      set_index: 2,
-      concert_id: new_concert.id,
-      songs_in_set: concert_data_hash[:set_two_array].count
-      )
-      song_index += 1
-      new_song.save!
-    end
-
-    # Handles if encore array is empty
     if concert_data_hash[:encore_array]
-      song_index = 1
-      concert_data_hash[:encore_array].each do |song|
-        new_song = ConcertSong.find_or_initialize_by(
-        song_id: (Song.find_or_initialize_by(song_name: song)).id,
-        play_index: song_index,
-        set_index: 3,
-        concert_id: new_concert.id,
-        songs_in_set: concert_data_hash[:encore_array].count
-        )
-        song_index += 1
-        new_song.save!
-      end
+      load_songs_for_concert(concert_data_hash[:encore_array], 3, new_concert)
     end
+
     new_concert
   end
-
 end
