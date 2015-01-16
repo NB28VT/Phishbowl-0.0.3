@@ -34,11 +34,9 @@ Acceptance criteria
 
     click_on "Submit Predictions"
 
-    click_on "Check your score"
+    click_on "Check Score"
 
-    save_and_open_page
-
-    expect(page).to have_content ("Your score is.....")
+    expect(page).to have_content ("Your score is...")
   end
 
 

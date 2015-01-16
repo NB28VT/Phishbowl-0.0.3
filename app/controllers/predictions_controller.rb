@@ -21,7 +21,8 @@ class PredictionsController < ApplicationController
 
   def show
     @prediction = Prediction.find(params[:id])
-    @prediction_score = @prediction.get_prediction_score
+    @prediction_calculator = PredictionCalculator.new
+    @prediction_score = @prediction_calculator.get_prediction_score(@prediction)
   end
 
   private
