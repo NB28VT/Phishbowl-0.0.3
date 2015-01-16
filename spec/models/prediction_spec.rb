@@ -3,7 +3,13 @@ require 'rails_helper'
 RSpec.describe Prediction, :type => :model do
   it "allows a user to enter a valid prediction" do
     prediction = Prediction.new
+    concert = FactoryGirl.build(:concert)
+    concert.save
+    user = FactoryGirl.build(:user)
+    user.save!
 
+    prediction.user_id = user.id
+    prediction.concert_id =
     prediction.set_one_opener_song_id = 3
     prediction.set_one_closer_song_id = 1
     prediction.set_two_opener_song_id = 2
