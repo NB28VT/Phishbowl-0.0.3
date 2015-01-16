@@ -1,8 +1,11 @@
 <h1>Concert Index Page</h1>
-<ul class="small-block-grid-3">
+<!-- <ul class="small-block-grid-3">
   <% @concerts.each do |concert| %>
     <h3><%= link_to concert.concert_date, concert_path(concert) %></h3>
     <li><%= concert.venue %></li>
     <li><%= concert.city %> , <%= concert.state %></li>
   <% end %>
-</ul>
+</ul> -->
+
+
+<%=link_to "Play with Random Show", concert_path(@random_concert) %>
