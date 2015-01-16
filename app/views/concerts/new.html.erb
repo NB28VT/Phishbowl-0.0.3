@@ -8,8 +8,8 @@
   <!-- <% end %> -->
 
   <h2>Random Show</h1>
-    <h3><%= @random_show.venue %></h3>
-    <li><%= @random_show.state %> , <%= @random_show.venue %></li>
+    <h3><%= @random_show.concert_date %></h3>
+    <li><%= @random_show.venue %></li>
+    <li><%= @random_show.city %> , <%= @random_show.state %></li>
     <li><%= link_to concert.venue, concert_path(concert) %></li>
-
 </ul>

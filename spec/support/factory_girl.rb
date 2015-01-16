@@ -9,6 +9,7 @@ FactoryGirl.define do
 
   factory :concert do
     sequence(:concert_date) { |n| "1/#{n}/1995" }
+    sequence(:id) { |n| n }
     state 'VT'
     city 'Burlington'
     venue 'Flynn Theatre'

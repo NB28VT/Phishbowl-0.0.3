@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150112234351) do
+ActiveRecord::Schema.define(version: 20150113223420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "concert_songs", force: :cascade do |t|
+    t.integer "song_id",      null: false
+    t.integer "play_index",   null: false
+    t.integer "set_index",    null: false
+    t.integer "concert_id",   null: false
+    t.integer "songs_in_set", null: false
+  end
 
   create_table "concerts", force: :cascade do |t|
     t.string   "venue",        null: false

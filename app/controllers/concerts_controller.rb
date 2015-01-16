@@ -1,11 +1,10 @@
 class ConcertsController < ApplicationController
   def index
-    @concerts = Concert.all
+    # Upcoming shows?
   end
 
   def show
     @concert = Concert.find(params[:id])
-    @predictions = @concert.predictions
   end
 
   private
